@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-
 __author__ = 'sandlbn'
 
-from django.utils import simplejson
 from django.db.models.query import QuerySet
+import json
 
 
 def event_serializer(events):
     """
-    serialize event model
+    Serialize event model.
+
+    :param events: A QuerySet of CalendarEvent
+    :return: List of events in json format
     """
     objects_body = []
 
@@ -23,6 +26,8 @@ def event_serializer(events):
             }
             objects_body.append(field)
 
-    objects_head = {"success": 1}
-    objects_head["result"] = objects_body
-    return simplejson.dumps(objects_head, encoding='utf-8')
+    objects_head = {
+        "success": 1,
+        "result": objects_body
+    }
+    return json.dumps(objects_head)
